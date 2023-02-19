@@ -1,5 +1,8 @@
 package org.example.springcourse.models;
 
+/**
+ * 4) создаем модель Person
+ */
 public class Person {
     private int id;
     private String name;
