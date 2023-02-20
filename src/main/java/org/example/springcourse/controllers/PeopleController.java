@@ -27,9 +27,9 @@ public class PeopleController {
     /**
      * 2) создаем метод который возвращает список из людей
      * 9) получаем людей из PersonDao и возвращаем шаблон return "people/index";
-     *    который будет показывать нам весь список людей когда мы перейдем по этому адресу
+     * который будет показывать нам весь список людей когда мы перейдем по этому адресу
      */
-    @GetMapping("/people")
+    @GetMapping()
     public String index(Model model) {
         model.addAttribute("people", personDAO.index());
         return "people/index";
@@ -37,9 +37,10 @@ public class PeopleController {
 
     /**
      * 3) создаем метод который возвращает название шаблона и его id
+     *
      * @PathVariable("id") данная анотация получит id из url и выведет его на экран,
      * например /people/2 id = 2
-     *
+     * <p>
      * 10) получаем человека по id и кладем его в модель
      */
     @GetMapping("/{id}")
