@@ -37,11 +37,11 @@ public class PersonDAO {
      *  проходимся по списку people найти списка с нужным id, если его нет вернем null
      */
     public Person show(int id) {
-        return people.stream()
+                return people.stream()
                 .filter(person -> person.getId() == id)
                 .findAny()
                 .orElse(null);
-    }
+        }
 
     public void save(Person person) {
         person.setId(++PEOPLE_COUNT);
