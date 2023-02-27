@@ -53,4 +53,8 @@ public class PersonDAO {
 
         personToBe.setName(updatePerson.getName());
     }
+
+    public void delete(int id) {
+        people.removeIf(p -> p.getId() == id);
+    }
 }
