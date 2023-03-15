@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 5) создаем класс который будет общаться с базой данных (списком)
@@ -28,7 +29,14 @@ public class PersonDAO {
      * 6) создаем метод который будет возвращать список из класса Person (список из людей)
      */
     public List<Person> index() {
-        return jdbcTemplate.query("SELECT * From Person", new BeanPropertyRowMapper<>(Person.class));
+        return jdbcTemplate.query("SELECT * FROM Person", new BeanPropertyRowMapper<>(Person.class));
+    }
+
+    public Optional<Person> show(String email) {
+        return jdbcTemplate.query("SELECT * FROM Person WHERE email=?", new Object[]{email},
+                new BeanPropertyRowMapper<>(Person.class))
+                .stream()
+                .findAny();
     }
 
     /**
@@ -38,26 +46,20 @@ public class PersonDAO {
      * проходимся по списку people найти списка с нужным id, если его нет вернем null
      */
     public Person show(int id) {
-        return jdbcTemplate.query("SELECT * FROM Person WHERE id=?",
-                        new Object[]{id}, new BeanPropertyRowMapper<>(Person.class))
+        return jdbcTemplate.query("SELECT * FROM Person WHERE id=?", new Object[]{id}, new BeanPropertyRowMapper<>(Person.class))
                 .stream()
                 .findAny()
                 .orElse(null);
     }
 
     public void save(Person person) {
-        jdbcTemplate.update("INSERT INTO Person(name, age, email) VALUES(?, ?, ?)",
-                person.getName(),
-                person.getAge(),
+        jdbcTemplate.update("INSERT INTO Person(name, age, email) VALUES(?, ?, ?)", person.getName(), person.getAge(),
                 person.getEmail());
     }
 
     public void update(int id, Person updatedPerson) {
-        jdbcTemplate.update("UPDATE Person SET name=?, age=?, email=? WHERE id=?",
-                updatedPerson.getName(),
-                updatedPerson.getAge(),
-                updatedPerson.getEmail(),
-                id);
+        jdbcTemplate.update("UPDATE Person SET name=?, age=?, email=? WHERE id=?", updatedPerson.getName(),
+                updatedPerson.getAge(), updatedPerson.getEmail(), id);
     }
 
     public void delete(int id) {
