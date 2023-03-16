@@ -1,9 +1,6 @@
 package org.example.springcourse.models;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 /**
  * 4) создаем модель Person
@@ -19,11 +16,18 @@ public class Person {
     @Email(message = "Email should not be empty")
     private String email;
 
-    public Person(int id, String name, int age, String email) {
+    @Pattern(regexp = "[A-Z]\\w+, [A-Z]\\w+, \\d{6}", message = "Your address in format: Country, City, Post code (6 digits)")
+    private String address;
+    //Страна, Город, Почтовый индекс(6 цифр)
+    //Russia, Moscow, 123456
+
+
+    public Person(int id, String name, int age, String email, String address) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.email = email;
+        this.address = address;
     }
 
     public Person() {
@@ -60,5 +64,13 @@ public class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
